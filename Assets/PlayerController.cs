@@ -5,26 +5,30 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5;
-    public float gravity = 9.81f;
-    CharacterController controller;
+    Rigidbody rb;
     Vector3 input;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
 
         input = (transform.right * moveHorizontal + transform.forward * moveVertical).normalized;
 
         input *= moveSpeed;
-       controller.Move(input * Time.deltaTime);
+    }
 
+    private void FixedUpdate()
+    {
+        input.y = rb.velocity.y;
+        rb.velocity = input;
+        rb.angularVelocity = Vector3.zero;
     }
 }

@@ -36,5 +36,6 @@ public class CameraControl : MonoBehaviour
 
         pitch = Mathf.Clamp(pitch, -90f, 90f);
         transform.localRotation = Quaternion.Euler(pitch, 0, 0);
+
     }
 }
